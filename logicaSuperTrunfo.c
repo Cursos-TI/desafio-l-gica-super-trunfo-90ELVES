@@ -1,81 +1,119 @@
 #include <stdio.h>
 
 int main() {
-    // Declaração das variáveis para a Carta 1
-    char estado1[3], codigo1[5], nome1[50];
-    int populacao1, pontos1;
-    float area1, pib1, densidade1, pibPerCapita1;
+    // Variáveis para as cartas (Reaproveitadas do nível anterior)
+    char nome1[50], nome2[50];
+    int pop1, pop2, pontos1, pontos2;
+    float area1, area2, pib1, pib2, densidade1, densidade2;
+    int opcao;
 
-    // Declaração das variáveis para a Carta 2
-    char estado2[3], codigo2[5], nome2[50];
-    int populacao2, pontos2;
-    float area2, pib2, densidade2, pibPerCapita2;
-
-    // --- CADASTRO DA CARTA 1 ---
+    // --- CADASTRO SIMPLIFICADO ---
     printf("--- Cadastro da Carta 1 ---\n");
-    printf("Estado (ex: SP): ");
-    scanf("%s", estado1);
-    printf("Código da Carta (ex: A01): ");
-    scanf("%s", codigo1);
     printf("Nome da Cidade: ");
-    scanf(" %[^\n]", nome1); // Lê a string com espaços
+    scanf(" %[^\n]", nome1);
     printf("População: ");
-    scanf("%d", &populacao1);
+    scanf("%d", &pop1);
     printf("Área (km²): ");
     scanf("%f", &area1);
     printf("PIB (bilhões): ");
     scanf("%f", &pib1);
-    printf("Número de Pontos Turísticos: ");
+    printf("Pontos Turísticos: ");
     scanf("%d", &pontos1);
+    densidade1 = (float)pop1 / area1;
 
-    // --- CADASTRO DA CARTA 2 ---
     printf("\n--- Cadastro da Carta 2 ---\n");
-    printf("Estado (ex: RJ): ");
-    scanf("%s", estado2);
-    printf("Código da Carta (ex: B02): ");
-    scanf("%s", codigo2);
     printf("Nome da Cidade: ");
     scanf(" %[^\n]", nome2);
     printf("População: ");
-    scanf("%d", &populacao2);
+    scanf("%d", &pop2);
     printf("Área (km²): ");
     scanf("%f", &area2);
     printf("PIB (bilhões): ");
     scanf("%f", &pib2);
-    printf("Número de Pontos Turísticos: ");
+    printf("Pontos Turísticos: ");
     scanf("%d", &pontos2);
+    densidade2 = (float)pop2 / area2;
 
-    // --- CÁLCULOS DOS ATRIBUTOS DERIVADOS ---
-    densidade1 = (float)populacao1 / area1;
-    pibPerCapita1 = (pib1 * 1000000000) / (float)populacao1; // Convertendo PIB para valor real
+    // --- MENU INTERATIVO ---
+    printf("\nEscolha o atributo para comparação:\n");
+    printf("1. População\n");
+    printf("2. Área\n");
+    printf("3. PIB\n");
+    printf("4. Pontos Turísticos\n");
+    printf("5. Densidade Demográfica\n");
+    printf("Opção: ");
+    scanf("%d", &opcao);
 
-    densidade2 = (float)populacao2 / area2;
-    pibPerCapita2 = (pib2 * 1000000000) / (float)populacao2;
-
-    // --- LÓGICA DE COMPARAÇÃO ---
-    // Atributo escolhido: População
     printf("\n========================================\n");
-    printf("Comparação de cartas (Atributo: População):\n");
-    printf("========================================\n");
-    printf("Carta 1 - %s (%s): %d\n", nome1, estado1, populacao1);
-    printf("Carta 2 - %s (%s): %d\n", nome2, estado2, populacao2);
-    printf("----------------------------------------\n");
 
-    if (populacao1 > populacao2) {
-        printf("Resultado: Carta 1 (%s) venceu!\n", nome1);
-    } else if (populacao2 > populacao1) {
-        printf("Resultado: Carta 2 (%s) venceu!\n", nome2);
-    } else {
-        printf("Resultado: Empate!\n");
+    // --- LÓGICA DE COMPARAÇÃO COM SWITCH E IF-ELSE ---
+    switch (opcao) {
+        case 1: // População
+            printf("Atributo: População\n");
+            printf("%s: %d\n%s: %d\n", nome1, pop1, nome2, pop2);
+            if (pop1 > pop2) {
+                printf("Resultado: Carta 1 (%s) venceu!\n", nome1);
+            } else if (pop2 > pop1) {
+                printf("Resultado: Carta 2 (%s) venceu!\n", nome2);
+            } else {
+                printf("Resultado: Empate!\n");
+            }
+            break;
+
+        case 2: // Área
+            printf("Atributo: Área\n");
+            printf("%s: %.2f km²\n%s: %.2f km²\n", nome1, area1, nome2, area2);
+            if (area1 > area2) {
+                printf("Resultado: Carta 1 (%s) venceu!\n", nome1);
+            } else if (area2 > area1) {
+                printf("Resultado: Carta 2 (%s) venceu!\n", nome2);
+            } else {
+                printf("Resultado: Empate!\n");
+            }
+            break;
+
+        case 3: // PIB
+            printf("Atributo: PIB\n");
+            printf("%s: %.2f bilhões\n%s: %.2f bilhões\n", nome1, pib1, nome2, pib2);
+            if (pib1 > pib2) {
+                printf("Resultado: Carta 1 (%s) venceu!\n", nome1);
+            } else if (pib2 > pib1) {
+                printf("Resultado: Carta 2 (%s) venceu!\n", nome2);
+            } else {
+                printf("Resultado: Empate!\n");
+            }
+            break;
+
+        case 4: // Pontos Turísticos
+            printf("Atributo: Pontos Turísticos\n");
+            printf("%s: %d\n%s: %d\n", nome1, pontos1, nome2, pontos2);
+            if (pontos1 > pontos2) {
+                printf("Resultado: Carta 1 (%s) venceu!\n", nome1);
+            } else if (pontos2 > pontos1) {
+                printf("Resultado: Carta 2 (%s) venceu!\n", nome2);
+            } else {
+                printf("Resultado: Empate!\n");
+            }
+            break;
+
+        case 5: // Densidade Demográfica (MENOR valor vence)
+            printf("Atributo: Densidade Demográfica\n");
+            printf("%s: %.2f hab/km²\n%s: %.2f hab/km²\n", nome1, densidade1, nome2, densidade2);
+            if (densidade1 < densidade2) {
+                printf("Resultado: Carta 1 (%s) venceu!\n", nome1);
+            } else if (densidade2 < densidade1) {
+                printf("Resultado: Carta 2 (%s) venceu!\n", nome2);
+            } else {
+                printf("Resultado: Empate!\n");
+            }
+            break;
+
+        default:
+            printf("Opção inválida! Tente novamente.\n");
+            break;
     }
 
-    /* DICA: Para comparar Densidade Populacional (Menor valor vence):
-       if (densidade1 < densidade2) {
-           printf("Carta 1 venceu!");
-       } else {
-           printf("Carta 2 venceu!");
-       }
-    */
+    printf("========================================\n");
 
     return 0;
 }
